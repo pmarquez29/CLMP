@@ -8,7 +8,7 @@ class Nodos extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
     final borde = Paint()
-      ..color = Colors.black
+      ..color = Color.fromARGB(255, 0, 18, 55)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
     nodos.forEach((nodo) {
@@ -19,8 +19,9 @@ class Nodos extends CustomPainter {
           text: nodo.nombre,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            fontFamily: 'Ralway',
+            fontStyle: FontStyle.italic,
           ),
         ),
         textDirection: TextDirection.ltr,

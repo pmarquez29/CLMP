@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'figuras.dart';
 import 'modelos.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -36,17 +37,15 @@ class _HomeState extends State<Home> {
               setState(() {
                 if (modo == 1) {
                   // generar un color random
-                  Random random = Random();
                   nodos.add(ModeloNodo(
                       ubi.globalPosition.dx,
                       ubi.globalPosition.dy,
                       "${nodos.length + 1}",
                       40,
-                      Color.fromARGB(255, random.nextInt(255),
-                          random.nextInt(255), random.nextInt(255))));
+                      Color.fromARGB(255, 7, 74, 137)));
                   //Si hay más de un nodo, se crea una linea entre este y los demás
                 }
-                if (modo == 6) {
+                if (modo == 2) {
                   nodos.forEach((nodo) {
                     if (sqrt(pow(nodo.x - ubi.globalPosition.dx, 2) +
                             pow(nodo.y - ubi.globalPosition.dy, 2)) <
@@ -64,7 +63,7 @@ class _HomeState extends State<Home> {
                     }
                   });
                 }
-                if (modo == 3) {
+                if (modo == 5) {
                   try {
                     nodos.forEach((nodo) {
                       if (sqrt(pow(nodo.x - ubi.globalPosition.dx, 2) +
@@ -97,8 +96,8 @@ class _HomeState extends State<Home> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: Text(
-                                    "Peso de la linea actual ${linea.peso}"),
+                                title:
+                                    Text("Valor de la Arista: ${linea.peso}"),
                                 content: TextField(
                                   keyboardType: TextInputType.number,
                                   onChanged: (valor) {
@@ -118,7 +117,7 @@ class _HomeState extends State<Home> {
                     });
                   } catch (e) {}
                 }
-                if (modo == 5) {
+                if (modo == 9) {
                   //Se selecciona el nodo inicial y final y se le asigna un color verde
                   try {
                     nodos.forEach((nodo) {
@@ -178,7 +177,7 @@ class _HomeState extends State<Home> {
           GestureDetector(
             onPanUpdate: (ubi) {
               setState(() {
-                if (modo == 2) {
+                if (modo == 3) {
                   //moviendo nodo
                   nodos.forEach((nodo) {
                     if (sqrt(pow(nodo.x - ubi.globalPosition.dx, 2) +
@@ -212,72 +211,26 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 37, 15, 136),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  modo = 1;
-                });
-              },
-              icon: Icon(Icons.add),
-              //tamano del icono
-              iconSize: 40,
-              tooltip: 'Nuevo Nodo',
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  modo = 2;
-                });
-              },
-              icon: Icon(Icons.edit),
-              tooltip: 'Mover Nodo',
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  modo = 3;
-                });
-              },
-              iconSize: 40,
-              icon: Icon(Icons.delete),
-              tooltip: 'Eliminar Nodo',
-            ),
-            IconButton(
-              onPressed: (() {
-                setState(() {
-                  modo = 4;
-                });
-              }),
-              icon: Icon(Icons.edit_attributes),
-              iconSize: 40,
-              tooltip: 'Insertar pesos',
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  modo = 5;
-                });
-              },
-              icon: Icon(Icons.calculate),
-              iconSize: 40,
-              tooltip: 'Calcular ruta entre nodos',
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  modo = 6;
-                });
-              },
-              icon: Icon(Icons.cake),
-              iconSize: 40,
-            ),
-          ],
-        ),
+      bottomNavigationBar: CurvedNavigationBar(
+        color: Color.fromARGB(255, 32, 142, 185),
+        backgroundColor: Color.fromARGB(255, 26, 31, 34),
+        buttonBackgroundColor: Color.fromARGB(255, 12, 132, 201),
+        height: 50,
+        items: <Widget>[
+          Icon(Icons.add, size: 30, color: Color.fromARGB(255, 255, 255, 255)),
+          Icon(Icons.arrow_right_alt_outlined,
+              size: 30, color: Color.fromARGB(255, 255, 255, 255)),
+          Icon(Icons.front_hand_rounded,
+              size: 30, color: Color.fromARGB(255, 255, 255, 255)),
+          Icon(Icons.edit, size: 30, color: Color.fromARGB(255, 255, 255, 255)),
+          Icon(Icons.delete,
+              size: 30, color: Color.fromARGB(255, 255, 255, 255)),
+        ],
+        onTap: (index) {
+          setState(() {
+            modo = index + 1;
+          });
+        },
       ),
     ));
   }
